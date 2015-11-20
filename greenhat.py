@@ -4,11 +4,17 @@
 # FILTHY COMMUNIST^^^^
 
 from datetime import date, timedelta
-from random import randint
+from random import randint, choice
 from time import sleep
+import codecs
 import sys
 import subprocess
 import os
+
+
+f = codecs.open('pulpfiction.txt', encoding='utf-8')
+pulp = [ x.strip() for x in f ]
+f.close()
 
 # returns a date string for the date that is N days before STARTDATE
 def get_date_string(n, startdate):
@@ -31,10 +37,10 @@ def main(argv):
 		curdate = get_date_string(i, startdate)
 		num_commits = randint(1, 10)
 		for commit in range(0, num_commits):
-			subprocess.call("echo '" + curdate + str(randint(0, 1000000)) +"' > realwork.txt; git add realwork.txt; GIT_AUTHOR_DATE='" + curdate + "' GIT_COMMITTER_DATE='" + curdate + "' git commit -m 'update'; ", shell=True)
+			subprocess.call("echo '" + curdate + str(randint(0, 1000000)) +"' > realwork.txt; git add realwork.txt; GIT_AUTHOR_DATE='" + curdate + "' GIT_COMMITTER_DATE='" + curdate + "' git commit -m '" + choice(pulp).replace("'", "") + "'; ", shell=True)
 			#sleep(.5)
 		i += 1
-	subprocess.call("git rm realwork.txt; git commit -m 'delete'; ", shell=True)
+	subprocess.call("git rm realwork.txt; git commit -m '" + choice(pulp).replace("'", "") + "'; ", shell=True)
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
